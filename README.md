@@ -1,4 +1,4 @@
 node-json
 =========
 
-A node module for validating and formatting JSON objects.
+A Node.js module for validating and formatting JSON objects.
