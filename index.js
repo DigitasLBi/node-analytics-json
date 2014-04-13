@@ -3,8 +3,8 @@
 var dtas = dtas || {};
 
 dtas.json = (function() {
-  var fs = require('fs');
-  var util = require('util');
+  var fs = require('fs'),
+      util = require('util');
 
   function init() {
     process.argv.forEach(function (val, index, array) {
@@ -43,7 +43,10 @@ dtas.json = (function() {
 
   function cleanUpJSON(file, data, parse) {
     data = (parse === true) ? removeNulls(JSON.parse(data)) : removeNulls(data);
-    
+   
+    //TODO Need to remove this and add elsewhere as an option
+    data = convertToHashMap(data);
+
     writeJSON(file + '.tmp', data);
 
     function removeNulls(obj) {
@@ -60,6 +63,19 @@ dtas.json = (function() {
     
       return obj;
     }
+  }
+
+  function convertToHashMap(json) {
+    var arr = json.csvRows,
+        len = arr.length,
+        map = {};
+
+    for (var i = 0; i < len; i++) {
+      obj = arr[i];
+      map[i + 2] = obj;
+    }
+    
+    return map;
   }
 
   function readJSON(file, callback) {
