@@ -4,8 +4,9 @@ var dtas = dtas || {};
 
 dtas.json = (function() {
   var fs = require('fs'),
-      util = require('util');
-
+      util = require('util'),
+      hash = require('string-hash');
+      
   function init() {
     process.argv.forEach(function (val, index, array) {
       switch(val) {
@@ -72,7 +73,10 @@ dtas.json = (function() {
 
     for (var i = 0; i < len; i++) {
       obj = arr[i];
-      map[i + 2] = obj;
+      
+      if (obj.Description) {
+        map[hash(obj.Description)] = obj;
+      }
     }
     
     return map;
